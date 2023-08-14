@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_project/utils/app_constant.dart';
@@ -15,7 +13,7 @@ class DatabaseRepository {
     if (_database != null) {
       return _database!;
     }
-    _database = await initDB("mydb    ");
+    _database = await initDB("mydb.db");
     return _database!;
   }
 
@@ -29,12 +27,12 @@ class DatabaseRepository {
     Database db,
     int version,
   ) async {
-    await db.execute(''' create table ${AppConstants.tableName} (
-      ${AppConstants.id} integer primary key autoincrement,
-      ${AppConstants.name} text not null,
-      ${AppConstants.describtion} text not null,
-      ${AppConstants.contactNumber} text not null,
-    )
+    await db.execute('''CREATE TABLE ${AppConstants.tableName} (
+      ${AppConstants.id} INTEGER PRIMARY KEY AUTOINCREMENT,
+      ${AppConstants.name} TEXT NOT NULL,
+      ${AppConstants.describtion} TEXT NOT NULL,
+      ${AppConstants.contactNumber} TEXT NOT NULL
+    );
 ''');
   }
 
@@ -48,7 +46,7 @@ class DatabaseRepository {
     }
   }
 
-  Future<List<Person>> getAllTodos() async {
+  Future<List<Person>> getAllPersons() async {
     final db = await databaseInstance.database;
 
     final result = await db.query(AppConstants.tableName);

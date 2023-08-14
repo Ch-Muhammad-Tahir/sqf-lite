@@ -3,16 +3,19 @@ class Person {
   String personName = "";
   String personDiscrirpton = "";
   String contactNumber = "";
-
+  Person();
+  Person.addPeron(
+      {required this.personName,
+      required this.personDiscrirpton,
+      required this.contactNumber});
   Person.fromJson(Map<String, dynamic> json) {
     if (json["personName"] != null &&
         (json["personName"] is String || json["personName"] is int)) {
       personName = json["personName"].toString();
     }
-    if (json["personDiscrirpton"] != null &&
-        (json["personDiscrirpton"] is String ||
-            json["personDiscrirpton"] is int)) {
-      personDiscrirpton = json["personDiscrirpton"].toString();
+    if (json["description"] != null &&
+        (json["description"] is String || json["description"] is int)) {
+      personDiscrirpton = json["description"].toString();
     }
     if (json["contactNumber"] != null &&
         (json["contactNumber"] is String || json["contactNumber"] is int)) {
@@ -26,7 +29,7 @@ class Person {
     Map<String, dynamic> result = {
       "id": id,
       "personName": personName,
-      "personDiscrirpton": personDiscrirpton,
+      "description": personDiscrirpton,
       "contactNumber": contactNumber,
     };
     return result;
