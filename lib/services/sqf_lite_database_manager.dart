@@ -2,7 +2,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_project/utils/app_constant.dart';
 
-import '../models/person.dart';
+import '../models/card_model.dart';
 
 class DatabaseRepository {
   static final DatabaseRepository databaseInstance = DatabaseRepository._init();
@@ -29,29 +29,36 @@ class DatabaseRepository {
   ) async {
     await db.execute('''CREATE TABLE ${AppConstants.tableName} (
       ${AppConstants.id} INTEGER PRIMARY KEY AUTOINCREMENT,
-      ${AppConstants.name} TEXT NOT NULL,
-      ${AppConstants.describtion} TEXT NOT NULL,
-      ${AppConstants.contactNumber} TEXT NOT NULL
+      ${AppConstants.cardNumber} TEXT NOT NULL,
+      ${AppConstants.cardHolderName} TEXT NOT NULL,
+      ${AppConstants.expiryDate} TEXT NOT NULL,
+      ${AppConstants.isCvvFocused} boolean ,
+      ${AppConstants.cvvCode} TEXT NOT NULL
     );
 ''');
   }
 
-  Future<void> insert({required Person person}) async {
+  Future<int> insert({
+    required CardModel cardModel,
+  }) async {
+    int id = 0;
     try {
       final db = await databaseInstance.database;
-      await db.insert(AppConstants.tableName, person.toMap());
+      id = await db.insert(AppConstants.tableName, cardModel.toMap());
       print('todoAdded');
+      return id;
     } catch (e) {
       print(e.toString());
+      return id;
     }
   }
 
-  Future<List<Person>> getAllPersons() async {
+  Future<List<CardModel>> getAllPersons() async {
     final db = await databaseInstance.database;
 
     final result = await db.query(AppConstants.tableName);
 
-    return result.map((json) => Person.fromJson(json)).toList();
+    return result.map((json) => CardModel.fromJson(json)).toList();
   }
 
   Future<void> delete(int id) async {
@@ -67,14 +74,14 @@ class DatabaseRepository {
     }
   }
 
-  Future<void> update(Person todo) async {
+  Future<void> update(CardModel cardModel) async {
     try {
       final db = await databaseInstance.database;
       db.update(
         AppConstants.tableName,
-        todo.toMap(),
+        cardModel.toMap(),
         where: '${AppConstants.id} = ?',
-        whereArgs: [todo.id],
+        whereArgs: [cardModel.id],
       );
     } catch (e) {
       print(e.toString());

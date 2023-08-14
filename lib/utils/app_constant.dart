@@ -1,7 +1,9 @@
 class AppConstants {
   static String id = "id";
-  static String name = "personName";
-  static String tableName = "Persons";
-  static String describtion = "description";
-  static String contactNumber = "contactNumber";
+  static String cardNumber = "cardNumber";
+  static String tableName = "Cards";
+  static String cvvCode = "cvvCode";
+  static String expiryDate = "expiryDate";
+  static String cardHolderName = "cardHolderName";
+  static String isCvvFocused = "isCvvFocused";
 }
