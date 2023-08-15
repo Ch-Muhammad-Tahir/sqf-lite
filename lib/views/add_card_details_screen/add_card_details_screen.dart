@@ -29,6 +29,12 @@ class CreditCardView extends State<CreditCard> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -157,7 +163,7 @@ class CreditCardView extends State<CreditCard> {
                               .addDataInToDatabase();
                           Navigator.pop(context);
                         },
-                        child: Text("Add Card"))
+                        child: const Text("Add Card"))
                   ],
                 ),
               ),

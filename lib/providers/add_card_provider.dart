@@ -25,7 +25,7 @@ class AddCardDetailProvider extends ChangeNotifier {
   void getDataFromDatbase() async {
     cards = await DatabaseRepository.databaseInstance.getAllPersons();
     cards.forEach((element) {
-      print(element..cardHolderName);
+      print(element.cardHolderName);
     });
     notifyListeners();
   }
@@ -45,5 +45,11 @@ class AddCardDetailProvider extends ChangeNotifier {
       print("Perosn ${cardModel.toMap()}");
       notifyListeners();
     }
+  }
+
+  void deteteDataFromDatabase(CardModel card) async {
+    await DatabaseRepository.databaseInstance.delete(card.id!);
+    cards.remove(card);
+    notifyListeners();
   }
 }
